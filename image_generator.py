@@ -1,6 +1,6 @@
-from models import Word, app, db
+from app.models import Word, app, db
 from PIL import Image, ImageDraw, ImageFont
-from Colors import Colors
+from colors import Colors
 from visualWord import VisualWord
 
 import random
@@ -9,7 +9,7 @@ import random
 dimensions = (720, 720)
 
 # The font we'll be using in our image
-font = ImageFont.truetype('fonts/KosugiMaru-Regular.ttf', size=45)
+font = ImageFont.truetype('app/fonts/KosugiMaru-Regular.ttf', size=45)
 
 for number in range(0, 100):
     random_number = random.randrange(0, db.session.query(Word).count())

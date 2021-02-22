@@ -1,21 +1,17 @@
-from app import db
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+from bs4 import BeautifulSoup
 
-class Entry(db.Model):
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jm_dict.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class Word(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    ent_seq = db.Column(db.Integer, unique=True)
-    kanji_element = db.relationship('KanjiElement')
-    reading_element = db.relationship('ReadingElement')
-    sense = db.relationship('Sense')
-
-class KanjiElement(db.Model):
-    entry_id = db.Column(db.Integer, db.ForeignKey('entry.id'))
-
-class KanjiElementInfo(db.Model):
-    kanji_element_id = db.Column(db.Integer, db.ForeignKey('kanji_element.id'))
-    value = db.Column(db.String(100))
-
-class ReadingElement(db.Model):
-    entry_id = db.Column(db.Integer, db.ForeignKey('entry.id'))
-
-class Sense(db.Model):
-    entry_id = db.Column(db.Integer, db.ForeignKey('entry.id'))
+    entry_id = db.Column(db.String(30))
+    kana = db.Column(db.String(100))
+    kanji = db.Column(db.String(100))
+    romaji = db.Column(db.String(100))
+    definition = db.Column(db.String(100))
